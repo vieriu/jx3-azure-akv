@@ -20,12 +20,22 @@ jxRequirements:
     enabled: false
     schedule: ""
   cluster:
+    azure:
+      secretStorage:
+        keyVaultName: devops-togg-jx
+      storage:
+        storageAccountName: jxdevopstoggjx
+    chartRepository: http://jenkins-x-chartmuseum.jx.svc.cluster.local:8080
+    environmentGitOwner: vieriu
     gitKind: github
     gitName: github
     gitServer: https://github.com
     provider: aks
+    registry: devopstoggjx.azurecr.io
   environments:
   - key: dev
+    owner: vieriu
+    repository: jx3-azure-akv
   - key: staging
   - key: production
   ingress:
@@ -36,8 +46,13 @@ jxRequirements:
       email: ""
       enabled: false
       production: false
+  pipelineUser:
+    username: bot_user
   repository: nexus
   secretStorage: azurekeyvault
+  storage:
+  - name: logs
+    url: azblob://logs
   vault: {}
   webhook: lighthouse
 jxRequirementsIngressExternalDNS:
