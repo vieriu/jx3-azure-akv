@@ -1,0 +1,59 @@
+apiVersion: v1
+data:
+  config.yaml: |
+    branch-protection:
+      protect-tested-repos: true
+    github:
+      LinkURL: null
+    in_repo_config:
+      enabled:
+        vieriu/github.com-vieriu-spring-boot-watch-pipeline-activity: true
+        vieriu/jx3-azure-akv: true
+        vieriu/jx3-terraform-azure: true
+    plank: {}
+    pod_namespace: jx
+    prowjob_namespace: jx
+    push_gateway:
+      serve_metrics: true
+    tide:
+      context_options:
+        from-branch-protection: true
+        required-if-present-contexts: null
+        skip-unknown-contexts: false
+      merge_method:
+        vieriu/github.com-vieriu-spring-boot-watch-pipeline-activity: merge
+        vieriu/jx3-azure-akv: merge
+        vieriu/jx3-terraform-azure: merge
+      queries:
+      - labels:
+        - approved
+        missingLabels:
+        - do-not-merge
+        - do-not-merge/hold
+        - do-not-merge/work-in-progress
+        - needs-ok-to-test
+        - needs-rebase
+        repos:
+        - vieriu/jx3-azure-akv
+        - vieriu/github.com-vieriu-spring-boot-watch-pipeline-activity
+        - vieriu/jx3-terraform-azure
+      - labels:
+        - updatebot
+        missingLabels:
+        - do-not-merge
+        - do-not-merge/hold
+        - do-not-merge/work-in-progress
+        - needs-ok-to-test
+        - needs-rebase
+        repos:
+        - vieriu/jx3-azure-akv
+        - vieriu/github.com-vieriu-spring-boot-watch-pipeline-activity
+        - vieriu/jx3-terraform-azure
+      target_url: http://lighthouse-jx.20.71.9.175.nip.io/merge/status
+kind: ConfigMap
+metadata:
+  creationTimestamp: null
+  name: config
+  namespace: jx
+  labels:
+    gitops.jenkins-x.io/pipeline: 'namespaces'

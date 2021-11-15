@@ -1,0 +1,22 @@
+apiVersion: jenkins.io/v1
+kind: SourceRepository
+metadata:
+  creationTimestamp: null
+  labels:
+    owner: vieriu
+    provider: github
+    repository: github.com-vieriu-spring-boot-watch-pipeline-activity
+    gitops.jenkins-x.io/pipeline: 'namespaces'
+  name: vieriu-github-com-vieriu-spring-boot-watch-pipeline-activity
+  namespace: jx
+spec:
+  httpCloneURL: https://github.com/vieriu/github.com-vieriu-spring-boot-watch-pipeline-activity.git
+  org: vieriu
+  provider: https://github.com
+  providerKind: github
+  providerName: github
+  repo: github.com-vieriu-spring-boot-watch-pipeline-activity
+  scheduler:
+    kind: ""
+    name: in-repo
+  url: https://github.com/vieriu/github.com-vieriu-spring-boot-watch-pipeline-activity
