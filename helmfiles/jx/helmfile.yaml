@@ -73,5 +73,8 @@ releases:
   values:
   - ../../versionStream/charts/jxgh/jx-build-controller/values.yaml.gotmpl
   - jx-values.yaml
+- chart: /mnt/d/__GITLAB/infrastructure/HelmCharts/MongoDB/
+  version: 1.2.3
+  name: mnt
 templates: {}
 renderedvalues: {}
