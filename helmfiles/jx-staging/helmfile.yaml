@@ -1,0 +1,11 @@
+filepath: ""
+namespace: jx-staging
+repositories:
+- name: dev
+  url: http://chartmuseum-jx.20.71.9.175.nip.io
+releases:
+- chart: dev/chartmuseum
+  version: 1.2.0
+  name: chartmuseum
+templates: {}
+renderedvalues: {}
