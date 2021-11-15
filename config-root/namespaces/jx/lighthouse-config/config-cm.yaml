@@ -7,6 +7,7 @@ data:
       LinkURL: null
     in_repo_config:
       enabled:
+        vieriu/github.com-vieriu-spring-boot-watch-pipeline-activity: true
         vieriu/jx3-azure-akv: true
     plank: {}
     pod_namespace: jx
@@ -19,6 +20,7 @@ data:
         required-if-present-contexts: null
         skip-unknown-contexts: false
       merge_method:
+        vieriu/github.com-vieriu-spring-boot-watch-pipeline-activity: merge
         vieriu/jx3-azure-akv: merge
       queries:
       - labels:
@@ -31,6 +33,7 @@ data:
         - needs-rebase
         repos:
         - vieriu/jx3-azure-akv
+        - vieriu/github.com-vieriu-spring-boot-watch-pipeline-activity
       - labels:
         - updatebot
         missingLabels:
@@ -41,6 +44,7 @@ data:
         - needs-rebase
         repos:
         - vieriu/jx3-azure-akv
+        - vieriu/github.com-vieriu-spring-boot-watch-pipeline-activity
       target_url: http://lighthouse-jx.20.71.9.175.nip.io/merge/status
 kind: ConfigMap
 metadata:
