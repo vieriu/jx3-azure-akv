@@ -10,6 +10,10 @@ data:
       repos:
       - vieriu/github.com-vieriu-spring-boot-watch-pipeline-activity
       require_self_approval: true
+    - lgtm_acts_as_approve: true
+      repos:
+      - vieriu/jx3-terraform-azure
+      require_self_approval: true
     cat: {}
     cherry_pick_unapproved: {}
     config_updater:
@@ -26,6 +30,11 @@ data:
       - endpoint: http://lighthouse-webui-plugin.jx.svc.cluster.local/lighthouse/events
         name: lighthouse-webui-plugin
       vieriu/jx3-azure-akv:
+      - endpoint: http://cd-indicators.jx.svc.cluster.local/lighthouse/events
+        name: cd-indicators
+      - endpoint: http://lighthouse-webui-plugin.jx.svc.cluster.local/lighthouse/events
+        name: lighthouse-webui-plugin
+      vieriu/jx3-terraform-azure:
       - endpoint: http://cd-indicators.jx.svc.cluster.local/lighthouse/events
         name: cd-indicators
       - endpoint: http://lighthouse-webui-plugin.jx.svc.cluster.local/lighthouse/events
@@ -68,6 +77,22 @@ data:
       - cat
       - dog
       - pony
+      vieriu/jx3-terraform-azure:
+      - approve
+      - assign
+      - blunderbuss
+      - help
+      - hold
+      - lgtm
+      - lifecycle
+      - override
+      - size
+      - trigger
+      - wip
+      - heart
+      - cat
+      - dog
+      - pony
     requiresig: {}
     sigmention: {}
     size:
@@ -82,6 +107,9 @@ data:
       trusted_org: todo
     - repos:
       - vieriu/github.com-vieriu-spring-boot-watch-pipeline-activity
+      trusted_org: todo
+    - repos:
+      - vieriu/jx3-terraform-azure
       trusted_org: todo
     welcome:
     - message_template: Welcome
