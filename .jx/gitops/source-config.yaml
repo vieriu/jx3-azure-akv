@@ -9,6 +9,7 @@ spec:
     providerKind: github
     repositories:
     - name: github.com-vieriu-spring-boot-watch-pipeline-activity
+    - name: jx3-azure-akv
     - name: jx3-terraform-azure
     scheduler: in-repo
   slack:

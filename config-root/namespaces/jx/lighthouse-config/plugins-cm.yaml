@@ -12,6 +12,10 @@ data:
       require_self_approval: true
     - lgtm_acts_as_approve: true
       repos:
+      - vieriu/jx3-azure-akv
+      require_self_approval: true
+    - lgtm_acts_as_approve: true
+      repos:
       - vieriu/jx3-terraform-azure
       require_self_approval: true
     cat: {}
@@ -107,6 +111,9 @@ data:
       trusted_org: todo
     - repos:
       - vieriu/github.com-vieriu-spring-boot-watch-pipeline-activity
+      trusted_org: todo
+    - repos:
+      - vieriu/jx3-azure-akv
       trusted_org: todo
     - repos:
       - vieriu/jx3-terraform-azure
