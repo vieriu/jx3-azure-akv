@@ -9,24 +9,81 @@ spec:
     - name: from-build-pack
       resources: {}
       taskSpec:
-        metadata: {}
         stepTemplate:
-          image: uses:jenkins-x/jx3-pipeline-catalog/tasks/environment/pullrequest.yaml@versionStream
           name: ""
-          resources:
-            requests:
-              cpu: 0.1
-              memory: 128Mi
-            limits:
-              cpu: 400m
-              memory: 512Mi
+          resources: {}
+          volumeMounts:
+          - mountPath: /etc/podinfo
+            name: podinfo
+            readOnly: true
           workingDir: /workspace/source
         steps:
-        - image: uses:jenkins-x/jx3-pipeline-catalog/tasks/git-clone/git-clone-env-pr.yaml@versionStream
+        - image: uses:jenkins-x/jx3-pipeline-catalog/tasks/git-clone/git-clone-pr.yaml@versionStream
+          name: ""
           resources: {}
-        - name: make-pr
+        - args:
+          - '[ -d /builder/home ] || mkdir -p /builder && ln -s /tekton/home /builder/home'
+          command:
+          - /bin/sh
+          - -c
+          env:
+          - name: KANIKO_FLAGS
+            value: --skip-unused-stages --snapshotMode=redo
+          image: gcr.io/jenkinsxio/builder-jx:2.1.155-778
+          name: setup-builder-home
           resources: {}
-  podTemplate: {}
+        - args:
+          - gitops
+          - variables
+          command:
+          - jx
+          image: gcr.io/jenkinsxio/jx-cli:latest
+          name: jx-variables
+          resources: {}
+        - args:
+          - make linux
+          command:
+          - /bin/sh
+          - -c
+          env:
+          - name: KANIKO_FLAGS
+            value: --skip-unused-stages --snapshotMode=redo
+          image: go
+          name: build-make-linux
+          resources: {}
+        - args:
+          - source .jx/variables.sh && cp /tekton/creds-secrets/tekton-container-registry-auth/.dockerconfigjson /kaniko/.docker/config.json && /kaniko/executor $KANIKO_FLAGS --cache=true --cache-dir=/workspace --context=/workspace/source --dockerfile=/workspace/source/Dockerfile --destination=$DOCKER_REGISTRY/$DOCKER_REGISTRY_ORG/$APP_NAME:$VERSION --cache-repo=$DOCKER_REGISTRY/$DOCKER_REGISTRY_ORG/cache
+          command:
+          - /busybox/sh
+          - -c
+          env:
+          - name: KANIKO_FLAGS
+            value: --skip-unused-stages --snapshotMode=redo
+          image: gcr.io/kaniko-project/executor:debug-v0.22.0
+          name: build-container-build
+          resources: {}
+        - args:
+          - source /workspace/source/.jx/variables.sh && jx preview create
+          command:
+          - /bin/bash
+          - -c
+          env:
+          - name: KANIKO_FLAGS
+            value: --skip-unused-stages --snapshotMode=redo
+          image: gcr.io/jenkinsxio/jx-cli
+          name: promote-jx-preview
+          resources: {}
+        volumes:
+        - downwardAPI:
+            items:
+            - fieldRef:
+                fieldPath: metadata.labels
+              path: labels
+          name: podinfo
+  podTemplate:
+    ImagePullSecrets: null
+    hostNetwork: false
+    schedulerName: ""
   serviceAccountName: tekton-bot
-  timeout: 12h0m0s
+  timeout: 240h0m0s
 status: {}
